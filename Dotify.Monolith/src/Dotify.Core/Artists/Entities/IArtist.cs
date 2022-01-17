@@ -1,9 +1,10 @@
 ﻿
+using Dotify.Core.Shared;
+
 namespace Dotify.Core.Artists.Entities;
 
-public interface IArtist
+public interface IArtist : IEntity
 {
-    List<string> Genres { get; set; }
-    string Id { get; set; }
     string Name { get; set; }
+    List<string> Genres { get; set; }
 }

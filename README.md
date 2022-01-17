@@ -80,19 +80,13 @@ Look carefully among the sea of URLs and you'll find the information we care abo
 We'll come back for the other properties later on, but this is a good starting point for our `Artist` entity:
 
 ```csharp
-namespace Dotify.Core.Entities;
+namespace Dotify.Core.Artists.Entities;
 
-public class Artist
+public interface IArtist
 {
-    public string Id { get; set; }
-    public string Name { get; set; }
-    public List<string> Genres { get; set; } = new();
-
-    public Artist(string id, string name)
-    {
-        Id = id;
-        Name = name;
-    }
+    string Id { get; set; }
+    string Name { get; set; }
+    List<string> Genres { get; set; }
 }
 ```
 
@@ -125,7 +119,7 @@ using MongoDB.Driver;
 
 namespace Dotify.Api.Features.Artists.Queries;
 
-public class GetArtistsQuery : IGetArtistsQuery
+public class GetArtistsQuery : IGetArtistsQuery<ArtistDto>
 {
     private readonly ArtistCollection _collection;
 
@@ -134,25 +128,30 @@ public class GetArtistsQuery : IGetArtistsQuery
         _collection = collection;
     }
 
-    public async Task<IEnumerable<Artist>> ExecuteAsync()
+    public async Task<IEnumerable<ArtistDto>> ExecuteAsync()
     {
         var filter = Builders<Artist>.Filter.Empty;
         var results = await _collection.Artists.FindAsync(filter);
+        var artists = await results.ToListAsync();
 
-        return await results.ToListAsync();
+        var artistDtos = new List<ArtistDto>(artists.Count);
+
+        artists.ForEach(a => artistDtos.Add(new ArtistDto(a)));
+
+        return artistDtos;
     }
 }
 ```
 
 Wire up our query into the MSDI `IServiceCollection`:
 ```csharp
-services.AddSingleton<IGetArtistsQuery, GetArtistsQuery>();
+services.AddSingleton<IGetArtistsQuery<ArtistDto>, GetArtistsQuery>();
 ```
 
 Finally, let's create the API endpoint. We use Carter to simplify and enhance ASP.NET Core Minimal API -- it provides some handy functionality and extension methods for us to use.
 
 ```csharp
-
+using Dotify.Api.Features.Artists.Data;
 using Dotify.Core.Artists.Queries;
 
 namespace Dotify.Api.Features.Artists.Modules;
@@ -161,10 +160,10 @@ public class ArtistModule : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        // our GetArtistsQuery instance is injected here!
-        app.MapGet("/artists", async (IGetArtistsQuery getArtistsQuery, HttpResponse res) =>
+        app.MapGet("/artists", async (IGetArtistsQuery<ArtistDto> getArtistsQuery, HttpResponse res) =>
         {
             var artists = await getArtistsQuery.ExecuteAsync();
+
             return artists;
         })
         .IncludeInOpenApi();
@@ -172,7 +171,7 @@ public class ArtistModule : ICarterModule
 }
 ```
 
-### Response Formatting
+### Response Objects
 
 Analyzing the Spotify data model, we find many common fields which are shared across the majority of responses. 
 

@@ -12,7 +12,7 @@ public class ArtistDto : IArtist, ILocatableEntity
     public string Uri { get; }
     public string Type { get; }
 
-    public ArtistDto(Artist a)
+    public ArtistDto(IArtist a)
     {
         Id = a.Id;
         Name = a.Name;
