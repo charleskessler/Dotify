@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Artists\Queries\" />
+    <ProjectReference Include="..\Dotify.Core\Dotify.Core.csproj" />
   </ItemGroup>
 
 </Project>

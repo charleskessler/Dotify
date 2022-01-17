@@ -5,5 +5,5 @@ namespace Dotify.Core.Artists.Queries;
 
 public interface IGetArtistsQuery
 {
-    IEnumerable<Artist> Execute();
+    Task<IEnumerable<Artist>> ExecuteAsync();
 }
