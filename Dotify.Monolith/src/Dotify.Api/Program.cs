@@ -1,12 +1,17 @@
-using Dotify.Api.Startup;
+using Carter;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddCarterInt();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+builder.Services.AddCarter();
 
 var app = builder.Build();
 
-app.UseCarter();
-app.UseHttpsRedirection();
+app.UseSwagger();
+app.UseSwaggerUI();
+app.MapCarter();
+
 
 app.Run();
