@@ -22,3 +22,103 @@ blahblhablh
 - [MassTransit](https://masstransit-project.com/)
 - [RabbitMQ](https://www.rabbitmq.com/)
 - [Azure](https://docs.microsoft.com/en-us/azure/app-service/quickstart-dotnetcore?tabs=net60&pivots=development-environment-vs)
+
+
+
+
+## Exploring The Spotify Data Model
+Let's jump right in and start playing with the [Spotify Developer Console](https://developer.spotify.com/console/) to get a feel for the types of queries and commands we can execute, and the data models that are returned.
+
+### Artist
+Try out the [Get Artist](https://developer.spotify.com/console/get-artist/?id=5wFXmYsg3KFJ8BDsQudJ4f) console, and take a look at the response:
+
+```json
+{
+    "external_urls": {
+      "spotify": "https://open.spotify.com/artist/5wFXmYsg3KFJ8BDsQudJ4f"
+    },
+    "followers": {
+      "href": null,
+      "total": 427177
+    },
+    "genres": [
+      "indie rock"
+    ],
+    "href": "https://api.spotify.com/v1/artists/5wFXmYsg3KFJ8BDsQudJ4f",
+    "id": "5wFXmYsg3KFJ8BDsQudJ4f",
+    "images": [
+      {
+        "height": 640,
+        "url": "https://i.scdn.co/image/ab6761610000e5eb642fbb74e3e7507c12d8b8fd",
+        "width": 640
+      },
+      {
+        "height": 320,
+        "url": "https://i.scdn.co/image/ab67616100005174642fbb74e3e7507c12d8b8fd",
+        "width": 320
+      },
+      {
+        "height": 160,
+        "url": "https://i.scdn.co/image/ab6761610000f178642fbb74e3e7507c12d8b8fd",
+        "width": 160
+      }
+    ],
+    "name": "Manchester Orchestra",
+    "popularity": 64,
+    "type": "artist",
+    "uri": "spotify:artist:5wFXmYsg3KFJ8BDsQudJ4f"
+  }
+```
+
+Look carefully among the sea of URLs and you'll find the information we care about right now:
+- id
+- name
+- genres
+
+We'll come back for the other properties but, for now, this is a good starting point for creating our Artist object:
+
+```csharp
+namespace Dotify.Core.Entities;
+
+public class Artist
+{
+    public string Id { get; set; }
+    public string Name { get; set; }
+    public List<string> Genres { get; set; } = new();
+
+    public Artist(string id, string name)
+    {
+        Id = id;
+        Name = name;
+    }
+}
+```
+
+
+
+
+
+
+
+
+Analyzing the Spotify data model, we find many common fields which are shared across the majority of responses. 
+
+For example, a [response for a query on a specific artist](https://developer.spotify.com/console/get-artist/?id=5wFXmYsg3KFJ8BDsQudJ4f):
+
+```json
+{
+  "id": "5wFXmYsg3KFJ8BDsQudJ4f",
+  "href": "https://api.spotify.com/v1/artists/5wFXmYsg3KFJ8BDsQudJ4f",
+  "uri": "spotify:artist:5wFXmYsg3KFJ8BDsQudJ4f",
+  "external_urls": {
+    "spotify": "https://open.spotify.com/artist/5wFXmYsg3KFJ8BDsQudJ4f"
+  },
+  "type": "artist",
+  ...
+}
+```
+Contains various ways to link to the artist record:
+- A unique ID
+- A reference to the API endpoint where information on the artist can be found
+- A URI which, presumably, is used for navigation within Spotify's applications
+- An external URL which points to the Spotify Web Player
