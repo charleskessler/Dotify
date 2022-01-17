@@ -10,10 +10,7 @@ public class GetArtistsQuery : IGetArtistsQuery<ArtistDto>
 {
     private readonly ArtistCollection _collection;
 
-    public GetArtistsQuery(ArtistCollection collection)
-    {
-        _collection = collection;
-    }
+    public GetArtistsQuery(ArtistCollection collection) => _collection = collection;
 
     public async Task<IEnumerable<ArtistDto>> ExecuteAsync()
     {
