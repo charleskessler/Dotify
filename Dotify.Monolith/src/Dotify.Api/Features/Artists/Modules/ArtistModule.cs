@@ -1,8 +1,6 @@
 ﻿
 using Dotify.Core.Artists.Queries;
 
-using Microsoft.AspNetCore.Mvc;
-
 namespace Dotify.Api.Features.Artists.Modules;
 
 public class ArtistModule : ICarterModule
