@@ -6,17 +6,22 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddFeatures();
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(options => options.DocInclusionPredicate((s, description) =>
+builder.Services.AddSwaggerGen(options => 
 {
-    foreach (var metaData in description.ActionDescriptor.EndpointMetadata)
+    options.CustomSchemaIds(x => x.GetCustomAttributes(true).OfType<DisplayNameAttribute>().FirstOrDefault()?.DisplayName ?? x.Name);
+
+    options.DocInclusionPredicate((s, description) =>
     {
-        if (metaData is IIncludeOpenApi)
+        foreach (var metaData in description.ActionDescriptor.EndpointMetadata)
         {
-            return true;
+            if (metaData is IIncludeOpenApi)
+            {
+                return true;
+            }
         }
-    }
-    return false;
-}));
+        return false;
+    });
+});
 
 
 builder.Services.AddCarter();

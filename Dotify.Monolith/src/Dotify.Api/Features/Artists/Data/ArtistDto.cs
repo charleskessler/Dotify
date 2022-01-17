@@ -3,6 +3,7 @@ using Dotify.Core.Shared;
 
 namespace Dotify.Api.Features.Artists.Data;
 
+[DisplayName("Artist")]
 public class ArtistDto : IArtist, ILocatableEntity
 {
     public string Id { get; set; }
@@ -17,7 +18,7 @@ public class ArtistDto : IArtist, ILocatableEntity
         Id = a.Id;
         Name = a.Name;
         Genres = a.Genres;
-        Type = a.GetType().ToString().ToLower();
+        Type = a.GetType().Name.ToLower();
         Href = $"https://localhost:7122/artists/{a.Id}";
         Uri = $"dotify:artists:{a.Id}";
     }
