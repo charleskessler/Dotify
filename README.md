@@ -75,7 +75,7 @@ Look carefully among the sea of URLs and you'll find the information we care abo
 - name
 - genres
 
-We'll come back for the other properties but, for now, this is a good starting point for creating our Artist object:
+We'll come back for the other properties but, for now, this is a good starting point for creating our `Artist` object:
 
 ```csharp
 namespace Dotify.Core.Entities;
@@ -94,9 +94,24 @@ public class Artist
 }
 ```
 
+#### `Artist` Module
 
+We'll be organizing our API into Features, so let's go ahead and create our `Artist` feature and build out its API module.
 
+##### GET Artists
+First, we need to define an interface that abstracts the act of 'Querying For All Artists'. We do this in our Core project, so that we can implement it any way we need to. For instance, we might mockup an in-memory List for testing, or switch from MongoDB to CosmosDB, and nothing has to change.
 
+```csharp
+
+using Dotify.Core.Artists.Entities;
+
+namespace Dotify.Core.Artists.Queries;
+
+public interface IGetArtistsQuery
+{
+    IEnumerable<Artist> Execute();
+}
+```
 
 
 

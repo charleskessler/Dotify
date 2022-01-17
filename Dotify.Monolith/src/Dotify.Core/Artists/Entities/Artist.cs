@@ -1,4 +1,4 @@
-﻿namespace Dotify.Core.Entities;
+﻿namespace Dotify.Core.Artists.Entities;
 
 public class Artist
 {
