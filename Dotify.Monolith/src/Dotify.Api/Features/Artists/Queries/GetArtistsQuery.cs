@@ -6,7 +6,7 @@ using MongoDB.Driver;
 
 namespace Dotify.Api.Features.Artists.Queries;
 
-public class GetArtistsQuery : IGetArtistsQuery
+public class GetArtistsQuery : IGetArtistsQuery<ArtistDto>
 {
     private readonly ArtistCollection _collection;
 
@@ -15,11 +15,16 @@ public class GetArtistsQuery : IGetArtistsQuery
         _collection = collection;
     }
 
-    public async Task<IEnumerable<Artist>> ExecuteAsync()
+    public async Task<IEnumerable<ArtistDto>> ExecuteAsync()
     {
         var filter = Builders<Artist>.Filter.Empty;
         var results = await _collection.Artists.FindAsync(filter);
+        var artists = await results.ToListAsync();
 
-        return await results.ToListAsync();
+        var artistDtos = new List<ArtistDto>(artists.Count);
+
+        artists.ForEach(a => artistDtos.Add(new ArtistDto(a)));
+
+        return artistDtos;
     }
 }

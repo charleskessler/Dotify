@@ -1,6 +1,8 @@
-﻿namespace Dotify.Core.Artists.Entities;
+﻿using Dotify.Core.Shared;
 
-public class Artist
+namespace Dotify.Core.Artists.Entities;
+
+public class Artist : IEntity, IArtist
 {
     public string Id { get; set; }
     public string Name { get; set; }

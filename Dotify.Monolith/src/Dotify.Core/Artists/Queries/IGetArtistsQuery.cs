@@ -3,7 +3,7 @@ using Dotify.Core.Artists.Entities;
 
 namespace Dotify.Core.Artists.Queries;
 
-public interface IGetArtistsQuery
+public interface IGetArtistsQuery<T> where T : IArtist
 {
-    Task<IEnumerable<Artist>> ExecuteAsync();
+    Task<IEnumerable<T>> ExecuteAsync();
 }

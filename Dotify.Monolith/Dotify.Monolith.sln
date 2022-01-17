@@ -6,10 +6,13 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2D5A985C-2417-44C2-8DA2-45388C008308}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{8FCB69A8-7FF8-40CD-AE79-3E62E5F721FD}"
+	ProjectSection(SolutionItems) = preProject
+		src\Dotify.Core\Shared\ILocatableEntity.cs = src\Dotify.Core\Shared\ILocatableEntity.cs
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dotify.Core", "src\Dotify.Core\Dotify.Core.csproj", "{38E1D6F9-8A7A-48AB-B6E6-E53766159EAB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dotify.Api", "src\Dotify.Api\Dotify.Api.csproj", "{216F79A4-F9B5-4B96-8615-B1951BBF70FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dotify.Api", "src\Dotify.Api\Dotify.Api.csproj", "{216F79A4-F9B5-4B96-8615-B1951BBF70FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

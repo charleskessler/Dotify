@@ -16,7 +16,7 @@ public static class ServiceRegistration
 
     private static IServiceCollection RegisterQueries(IServiceCollection services)
     {
-        services.AddSingleton<IGetArtistsQuery, GetArtistsQuery>();
+        services.AddSingleton<IGetArtistsQuery<ArtistDto>, GetArtistsQuery>();
 
         return services;
     }

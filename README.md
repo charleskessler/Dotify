@@ -1,7 +1,7 @@
 # Dotify
 
 ## What is it?
-The goal of this project is to document the iterative process of implementing and scaling an API -- building a monolithic structure, then refactoring to distributed microservices.
+The goal of this project is to document the iterative process of implementing and scaling an API by first building a monolithic structure, and then refactoring to distributed microservices.
 
 Since this project is focused on implementing an API, rather than designing one, we will be using the [Spotify Public API](https://developer.spotify.com/documentation/web-api/) as a reference for our functional requirements and data model.
 
@@ -11,10 +11,11 @@ An application that is designed to run within a single process, on a single serv
 
 #### What We'll Use To Build It
 - [Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html) (aka [Onion Architecture, Ports & Adapters, Hexagonal Architecture](https://en.wikipedia.org/wiki/Hexagonal_architecture_(software)))
-- ASP.NET Core Web API
-- In-process messaging via [Mediatr](https://github.com/jbogard/MediatR)
+- [ASP.NET Core Minimal API](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis?view=aspnetcore-6.0)
+  - Supplemented by [Carter](https://github.com/CarterCommunity/Carter)
 - [MongoDB](https://docs.mongodb.com/)
-- [Carter](https://github.com/CarterCommunity/Carter)
+- [Mediatr](https://github.com/jbogard/MediatR)
+
 
 ### Microservices
 blahblhablh
@@ -31,7 +32,7 @@ blahblhablh
 Let's jump right in and start playing with the [Spotify Developer Console](https://developer.spotify.com/console/) to get a feel for the types of queries and commands we can execute, and the data models that are returned.
 
 ### Artist
-Try out the [Get Artist](https://developer.spotify.com/console/get-artist/?id=5wFXmYsg3KFJ8BDsQudJ4f) console, and take a look at the response:
+Try out the [Get Artist](https://developer.spotify.com/console/get-artist/?id=5wFXmYsg3KFJ8BDsQudJ4f) console:
 
 ```json
 {
@@ -76,7 +77,7 @@ Look carefully among the sea of URLs and you'll find the information we care abo
 - name
 - genres
 
-We'll come back for the other properties but, for now, this is a good starting point for creating our `Artist` object:
+We'll come back for the other properties later on, but this is a good starting point for our `Artist` entity:
 
 ```csharp
 namespace Dotify.Core.Entities;
@@ -100,7 +101,7 @@ public class Artist
 We'll be organizing our API into Features, so let's go ahead and create our `Artist` feature and build out its API module.
 
 ##### GET Artists
-First, we need to define an interface that abstracts the act of 'Querying For All Artists'. We do this in our Core project, so that we can implement it any way we need to. For instance, we might mockup an in-memory List for testing, or switch from MongoDB to CosmosDB, and nothing has to change.
+First, we need to define an interface that abstracts the act of 'Querying For All `Artists`'. We do this in our Core project, so that we can implement it any way we need to. For instance, we might mockup an in-memory List for testing, or switch from MongoDB to CosmosDB, and nothing has to change.
 
 ```csharp
 
@@ -113,7 +114,7 @@ public interface IGetArtistsQuery
     IEnumerable<Artist> Execute();
 }
 ```
-Now, in our API project we can implement this interface using our MongoDB collection:
+Now, in our API project we can implement this interface using our MongoDB `Artist` collection:
 
 ```csharp
 using Dotify.Api.Features.Artists.Data;
@@ -143,12 +144,12 @@ public class GetArtistsQuery : IGetArtistsQuery
 }
 ```
 
-Wire up our query into the MSDI IServiceCollection:
+Wire up our query into the MSDI `IServiceCollection`:
 ```csharp
 services.AddSingleton<IGetArtistsQuery, GetArtistsQuery>();
 ```
 
-Finally, let's create the API endpoint. We use Carter to simplify and enhance ASP.NET Core Minimal Web API -- it provides some handy functionality and extension methods for us to use.
+Finally, let's create the API endpoint. We use Carter to simplify and enhance ASP.NET Core Minimal API -- it provides some handy functionality and extension methods for us to use.
 
 ```csharp
 
@@ -164,13 +165,14 @@ public class ArtistModule : ICarterModule
         app.MapGet("/artists", async (IGetArtistsQuery getArtistsQuery, HttpResponse res) =>
         {
             var artists = await getArtistsQuery.ExecuteAsync();
-
             return artists;
-        }).IncludeInOpenApi();
+        })
+        .IncludeInOpenApi();
     }
 }
 ```
 
+### Response Formatting
 
 Analyzing the Spotify data model, we find many common fields which are shared across the majority of responses. 
 
