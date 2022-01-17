@@ -14,6 +14,7 @@ An application that is designed to run within a single process, on a single serv
 - ASP.NET Core Web API
 - In-process messaging via [Mediatr](https://github.com/jbogard/MediatR)
 - [MongoDB](https://docs.mongodb.com/)
+- [Carter](https://github.com/CarterCommunity/Carter)
 
 ### Microservices
 blahblhablh
@@ -112,8 +113,63 @@ public interface IGetArtistsQuery
     IEnumerable<Artist> Execute();
 }
 ```
+Now, in our API project we can implement this interface using our MongoDB collection:
 
+```csharp
+using Dotify.Api.Features.Artists.Data;
+using Dotify.Core.Artists.Entities;
+using Dotify.Core.Artists.Queries;
 
+using MongoDB.Driver;
+
+namespace Dotify.Api.Features.Artists.Queries;
+
+public class GetArtistsQuery : IGetArtistsQuery
+{
+    private readonly ArtistCollection _collection;
+
+    public GetArtistsQuery(ArtistCollection collection)
+    {
+        _collection = collection;
+    }
+
+    public async Task<IEnumerable<Artist>> ExecuteAsync()
+    {
+        var filter = Builders<Artist>.Filter.Empty;
+        var results = await _collection.Artists.FindAsync(filter);
+
+        return await results.ToListAsync();
+    }
+}
+```
+
+Wire up our query into the MSDI IServiceCollection:
+```csharp
+services.AddSingleton<IGetArtistsQuery, GetArtistsQuery>();
+```
+
+Finally, let's create the API endpoint. We use Carter to simplify and enhance ASP.NET Core Minimal Web API -- it provides some handy functionality and extension methods for us to use.
+
+```csharp
+
+using Dotify.Core.Artists.Queries;
+
+namespace Dotify.Api.Features.Artists.Modules;
+
+public class ArtistModule : ICarterModule
+{
+    public void AddRoutes(IEndpointRouteBuilder app)
+    {
+        // our GetArtistsQuery instance is injected here!
+        app.MapGet("/artists", async (IGetArtistsQuery getArtistsQuery, HttpResponse res) =>
+        {
+            var artists = await getArtistsQuery.ExecuteAsync();
+
+            return artists;
+        }).IncludeInOpenApi();
+    }
+}
+```
 
 
 Analyzing the Spotify data model, we find many common fields which are shared across the majority of responses. 
