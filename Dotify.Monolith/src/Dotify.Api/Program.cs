@@ -8,7 +8,7 @@ builder.Services.AddFeatures();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options => 
 {
-    options.CustomSchemaIds(x => x.GetCustomAttributes(true).OfType<DisplayNameAttribute>().FirstOrDefault()?.DisplayName ?? x.Name);
+    options.CustomSchemaIds(x => x.Name.EndsWith("Dto") ? x.Name.Replace("Dto", string.Empty) : x.Name);
 
     options.DocInclusionPredicate((s, description) =>
     {
