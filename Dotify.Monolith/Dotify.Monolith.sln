@@ -1,8 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30114.105
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.31903.286
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2D5A985C-2417-44C2-8DA2-45388C008308}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{8FCB69A8-7FF8-40CD-AE79-3E62E5F721FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dotify.Core", "src\Dotify.Core\Dotify.Core.csproj", "{38E1D6F9-8A7A-48AB-B6E6-E53766159EAB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -10,5 +16,17 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {02A75EC8-A80A-409E-855D-415F25569561}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{38E1D6F9-8A7A-48AB-B6E6-E53766159EAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38E1D6F9-8A7A-48AB-B6E6-E53766159EAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38E1D6F9-8A7A-48AB-B6E6-E53766159EAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38E1D6F9-8A7A-48AB-B6E6-E53766159EAB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{38E1D6F9-8A7A-48AB-B6E6-E53766159EAB} = {2D5A985C-2417-44C2-8DA2-45388C008308}
 	EndGlobalSection
 EndGlobal
