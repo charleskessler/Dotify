@@ -9,7 +9,7 @@ using Dotify.Core.Albums.Exceptions;
 
 namespace UnitTests.Dotify.Core.Albums.Entities.AlbumTests;
 
-public class AlbumAddTrack
+public class AddTrack
 {
     private readonly string _artistId = "ARTIST ID";
     private readonly string _trackId = "TRACK ID";
@@ -22,6 +22,8 @@ public class AlbumAddTrack
         album.AddTrack(_trackId, _trackNumber);
 
         var albumTrack = album.Tracks.Single();
+
+        Assert.Single(album.Tracks);
         Assert.Equal(_trackId, albumTrack.TrackId);
         Assert.Equal(_trackNumber, albumTrack.Number);
     }

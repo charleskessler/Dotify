@@ -34,4 +34,9 @@ public class Album : BaseEntity<string>, IAggregateRoot
         _tracks.Add(new AlbumTrack(trackId, trackNumber));
     }
 
+    public void RemoveTrack(string trackId)
+    {
+        _tracks.RemoveAll(t => t.TrackId == trackId);
+    }
+
 }
