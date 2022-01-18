@@ -1,6 +1,6 @@
 ﻿using Dotify.Core.Albums.Queries;
 
-namespace Dotify.Api.Features.Albums;
+namespace Dotify.Api.Features.Albums.Queries;
 
 public class GetAlbumByIdModule : ICarterModule
 {

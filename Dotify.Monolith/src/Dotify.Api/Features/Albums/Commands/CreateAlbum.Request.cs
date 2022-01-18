@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Dotify.Api.Features.Albums;
+namespace Dotify.Api.Features.Albums.Commands;
 
 public class CreateAlbumRequest
 {

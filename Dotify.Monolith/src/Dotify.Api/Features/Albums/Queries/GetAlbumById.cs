@@ -1,10 +1,10 @@
-﻿using Dotify.Api.Data.Albums;
+﻿using Dotify.Api.Features.Albums.Data;
 using Dotify.Core.Albums.Entities;
 using Dotify.Core.Albums.Queries;
 
 using MongoDB.Driver;
 
-namespace Dotify.Api.Features.Albums;
+namespace Dotify.Api.Features.Albums.Queries;
 
 public class GetAlbumById : IGetAlbumById
 {

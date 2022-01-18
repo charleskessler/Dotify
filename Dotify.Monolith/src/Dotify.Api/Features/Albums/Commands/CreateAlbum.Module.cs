@@ -1,6 +1,6 @@
 ﻿using Dotify.Core.Albums.Commands;
 
-namespace Dotify.Api.Features.Albums;
+namespace Dotify.Api.Features.Albums.Commands;
 
 public class CreateAlbumModule : ICarterModule
 {

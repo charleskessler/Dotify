@@ -1,4 +1,4 @@
-﻿using Dotify.Api.Data.Albums;
+﻿using Dotify.Api.Features.Albums.Data;
 using Dotify.Api.Features.Artists;
 
 namespace Dotify.Api.Startup;

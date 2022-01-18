@@ -1,8 +1,9 @@
-﻿using Dotify.Api.Features.Albums;
+﻿using Dotify.Api.Features.Albums.Commands;
+using Dotify.Api.Features.Albums.Queries;
 using Dotify.Core.Albums.Commands;
 using Dotify.Core.Albums.Queries;
 
-namespace Dotify.Api.Data.Albums;
+namespace Dotify.Api.Features.Albums.Data;
 
 public static class AlbumsServicesRegistration
 {

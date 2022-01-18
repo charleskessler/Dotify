@@ -1,9 +1,8 @@
-﻿
-using Dotify.Core.Albums.Entities;
+﻿using Dotify.Core.Albums.Entities;
 
 using MongoDB.Driver;
 
-namespace Dotify.Api.Data.Albums;
+namespace Dotify.Api.Features.Albums.Data;
 
 public class AlbumCollection
 {

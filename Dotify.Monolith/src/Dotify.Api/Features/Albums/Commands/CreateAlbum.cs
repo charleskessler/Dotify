@@ -1,10 +1,10 @@
-﻿using Dotify.Api.Data.Albums;
+﻿using Dotify.Api.Features.Albums.Data;
 using Dotify.Core.Albums.Commands;
 using Dotify.Core.Albums.Entities;
 
 using MongoDB.Bson;
 
-namespace Dotify.Api.Features.Albums;
+namespace Dotify.Api.Features.Albums.Commands;
 
 public class CreateAlbum : ICreateAlbum
 {
