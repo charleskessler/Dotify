@@ -168,8 +168,8 @@ public class ArtistModule : ICarterModule
         })
         .IncludeInOpenApi();
     }
-}
-```
+}   
+```                                            
 
 ### Response Objects
 
@@ -194,3 +194,33 @@ Contains various ways to link to the artist record:
 - A reference to the API endpoint where information on the artist can be found
 - A URI which, presumably, is used for navigation within Spotify's applications
 - An external URL which points to the Spotify Web Player
+
+We tack this on our Data Transfer Object (DTO) implementation of our `IArtist` entity, by implementing the `ILocatableEntity` interface:
+
+
+```csharp
+using Dotify.Core.Artists.Entities;
+using Dotify.Core.Shared;
+
+namespace Dotify.Api.Features.Artists.Data;
+
+public class ArtistDto : IArtist, ILocatableEntity
+{
+    public string Id { get; set; }
+    public List<string> Genres { get; set; }
+    public string Name { get; set; }
+    public string Href { get; }
+    public string Uri { get; }
+    public string Type { get; }
+
+    public ArtistDto(IArtist a)
+    {
+        Id = a.Id;
+        Name = a.Name;
+        Genres = a.Genres;
+        Type = a.GetType().Name.ToLower();
+        Href = $"https://localhost:7122/artists/{a.Id}";
+        Uri = $"dotify:artists:{a.Id}";
+    }
+}
+```
