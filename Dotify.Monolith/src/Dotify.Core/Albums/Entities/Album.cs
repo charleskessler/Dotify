@@ -41,6 +41,11 @@ public class Album : BaseEntity<string>, IAggregateRoot
         _artists.Add(new AlbumArtist(artistId, name));
     }
 
+    public void RemoveArtist(string artistId)
+    {
+        _artists.RemoveAll(a => a.ArtistId == artistId);
+    }
+
     public void AddTrack(string trackId, int trackNumber)
     {
         Guard.Against.NullOrWhiteSpace(trackId, nameof(trackId));
