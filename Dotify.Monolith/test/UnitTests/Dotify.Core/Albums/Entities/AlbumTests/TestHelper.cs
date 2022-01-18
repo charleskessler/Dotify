@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 using Dotify.Core.Albums.Entities;
 
 namespace UnitTests.Dotify.Core.Albums.Entities.AlbumTests;
 
 public static class TestHelper
 {
+    private static readonly string _albumId = "ALBUM ID";
+    private static readonly string _albumTitle = "ALBUM TITLE!";
+    private static readonly string _releaseDate = "2022-02-22";
     public static Album CreateAlbum()
     {
-        return new Album("ALBUM TITLE!", new DateOnly(2001, 09, 11));
+        return new Album(_albumId, _albumTitle, _releaseDate);
     }
 }

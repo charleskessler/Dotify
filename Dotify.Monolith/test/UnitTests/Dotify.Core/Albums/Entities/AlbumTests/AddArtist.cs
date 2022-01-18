@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace UnitTests.Dotify.Core.Albums.Entities.AlbumTests;
+﻿namespace UnitTests.Dotify.Core.Albums.Entities.AlbumTests;
 
 public class AddArtist
 {
@@ -15,7 +9,7 @@ public class AddArtist
     {
         var album = TestHelper.CreateAlbum();
 
-        album.AddArtist(_artistId, _artistName);
+        album.AddArtist(_artistId);
 
         Assert.Single(album.Artists);
     }
@@ -25,8 +19,9 @@ public class AddArtist
     {
         var album = TestHelper.CreateAlbum();
 
-        album.AddArtist(_artistId, _artistName);
-        album.AddArtist(_artistId, _artistName);
+
+        album.AddArtist(_artistId);
+        album.AddArtist(_artistId);
 
         Assert.Single(album.Artists);
     }
