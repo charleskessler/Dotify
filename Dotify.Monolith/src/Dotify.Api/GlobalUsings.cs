@@ -2,3 +2,4 @@
 global using Carter.Response;
 global using Carter.OpenApi;
 global using System.ComponentModel;
+global using Carter.ModelBinding;

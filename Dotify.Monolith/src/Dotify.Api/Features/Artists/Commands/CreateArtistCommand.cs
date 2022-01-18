@@ -2,6 +2,8 @@
 using Dotify.Core.Artists.Commands;
 using Dotify.Core.Artists.Entities;
 
+using FluentValidation;
+
 using MongoDB.Bson;
 
 namespace Dotify.Api.Features.Artists.Commands;
@@ -26,3 +28,10 @@ public class CreateArtistCommand : ICreateArtistCommand<ArtistDto>
 }
 
 public record CreateArtist(string Name, List<string>? Genres);
+public class CreateArtistValidator : AbstractValidator<CreateArtist>
+{
+    public CreateArtistValidator()
+    {
+        RuleFor(x => x.Name).NotEmpty();
+    }
+}

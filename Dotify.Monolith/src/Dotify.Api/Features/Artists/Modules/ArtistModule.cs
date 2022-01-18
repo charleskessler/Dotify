@@ -1,4 +1,6 @@
 ﻿
+using System.Net;
+
 using Dotify.Api.Features.Artists.Commands;
 using Dotify.Api.Features.Artists.Data;
 using Dotify.Api.Models;
@@ -34,8 +36,16 @@ public class ArtistModule : ICarterModule
         })
         .IncludeInOpenApi();
 
-        app.MapPost("/artists", async (CreateArtist createArtist, ICreateArtistCommand<ArtistDto> createArtistCommand, HttpResponse res) =>
+        app.MapPost("/artists", async (CreateArtist createArtist, ICreateArtistCommand<ArtistDto> createArtistCommand, HttpRequest req, HttpResponse res) =>
         {
+            var validation = req.Validate(createArtist);
+            if (!validation.IsValid)
+            {
+                res.StatusCode = (int)HttpStatusCode.UnprocessableEntity;
+                await res.Negotiate(validation.GetFormattedErrors());
+                return;
+            }
+
             var artist = createArtistCommand.ExecuteAsync(createArtist.Name, createArtist.Genres ?? new List<string>());
 
             await res.Negotiate(new { Artists = artist });
