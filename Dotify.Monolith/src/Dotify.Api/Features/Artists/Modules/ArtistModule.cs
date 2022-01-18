@@ -10,7 +10,8 @@ using Dotify.Core.Artists.Queries;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dotify.Api.Features.Artists.Modules;
-
+    
+[Route("/api")]
 public class ArtistModule : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)

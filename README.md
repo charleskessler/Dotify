@@ -195,7 +195,7 @@ Contains various ways to link to the artist record:
 - A URI which, presumably, is used for navigation within Spotify's applications
 - An external URL which points to the Spotify Web Player
 
-We tack this on our Data Transfer Object (DTO) implementation of our `IArtist` entity, by implementing the `ILocatableEntity` interface:
+We'll ultimately utilize a better solution, but for now tack this on our Data Transfer Object (DTO) implementation of our `IArtist` entity, by implementing the `ILocatableEntity` interface:
 
 
 ```csharp
