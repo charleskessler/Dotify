@@ -5,8 +5,8 @@ namespace Dotify.Core.Albums.Entities;
 
 public class AlbumArtist : BaseEntity<string>
 {
-    public string ArtistId { get; set; }
-    public string Name { get; set; }
+    public string ArtistId { get; private set; }
+    public string Name { get; private set; }
 
     public AlbumArtist(string artistId, string name)
     {

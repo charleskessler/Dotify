@@ -44,6 +44,7 @@ public class Album : BaseEntity<string>, IAggregateRoot
     public void AddTrack(string trackId, int trackNumber)
     {
         Guard.Against.NullOrWhiteSpace(trackId, nameof(trackId));
+        Guard.Against.OutOfRange(trackNumber, nameof(trackNumber), 1, int.MaxValue);
 
         if (_tracks.Any(t => t.Number == trackNumber))
         {

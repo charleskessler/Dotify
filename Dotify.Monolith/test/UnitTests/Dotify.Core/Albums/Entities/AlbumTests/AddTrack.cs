@@ -39,6 +39,14 @@ public class AddTrack
     }
 
     [Fact]
+    public void CantAddTrackNumberZero()
+    {
+        var album = new Album(_albumTitle, _releaseDate);
+
+        Assert.Throws<ArgumentOutOfRangeException>(() => album.AddTrack(_trackId, 0));
+    }
+
+    [Fact]
     public void KeepsExistingTrackWhenAddingDuplicate()
     {
         var album = new Album(_albumTitle, _releaseDate);
