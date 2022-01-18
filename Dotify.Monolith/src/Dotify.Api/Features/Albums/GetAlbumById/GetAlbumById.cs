@@ -20,6 +20,6 @@ public class GetAlbumById : IGetAlbumById
         var filter = Builders<Album>.Filter.Where(a => a.Id == id);
         var result = await _collection.Albums.FindAsync(filter);
 
-        return null;
+        return await result.SingleOrDefaultAsync();
     }
 }
