@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Ardalis.GuardClauses;
+
 using Dotify.Core.Albums.Exceptions;
 using Dotify.Core.Shared;
 
@@ -17,19 +19,32 @@ public class Album : BaseEntity<string>, IAggregateRoot
     public IReadOnlyCollection<AlbumArtist> Artists => _artists.AsReadOnly();
     public string Title { get; private set; }
     public DateOnly ReleaseDate { get; private set; }
+
     public Album(string title, DateOnly releaseDate)
     {
-        if (string.IsNullOrWhiteSpace(title))
-        {
-            throw new ArgumentException($"'{nameof(title)}' cannot be null or whitespace.", nameof(title));
-        }
+        Guard.Against.NullOrWhiteSpace(title, nameof(title));
 
         Title = title;
         ReleaseDate = releaseDate;
     }
+    
+    public void AddArtist(string artistId, string name)
+    {
+        Guard.Against.NullOrWhiteSpace(artistId, nameof(artistId));
+        Guard.Against.NullOrWhiteSpace(name, nameof(name));
+
+        if (_artists.Any(a => a.ArtistId == artistId))
+        {
+            return;
+        }
+
+        _artists.Add(new AlbumArtist(artistId, name));
+    }
 
     public void AddTrack(string trackId, int trackNumber)
     {
+        Guard.Against.NullOrWhiteSpace(trackId, nameof(trackId));
+
         if (_tracks.Any(t => t.Number == trackNumber))
         {
             throw new AlbumTrackNumberAlreadyExistsException(trackId, trackNumber);
