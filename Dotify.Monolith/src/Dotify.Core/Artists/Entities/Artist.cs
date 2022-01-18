@@ -1,6 +1,4 @@
-﻿using Dotify.Core.Shared;
-
-namespace Dotify.Core.Artists.Entities;
+﻿namespace Dotify.Core.Artists.Entities;
 
 public class Artist : IArtist
 {

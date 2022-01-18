@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 using Ardalis.GuardClauses;
 
 using Dotify.Core.Albums.Exceptions;
@@ -27,7 +22,7 @@ public class Album : BaseEntity<string>, IAggregateRoot
         Title = title;
         ReleaseDate = releaseDate;
     }
-    
+
     public void AddArtist(string artistId, string name)
     {
         Guard.Against.NullOrWhiteSpace(artistId, nameof(artistId));
@@ -59,7 +54,7 @@ public class Album : BaseEntity<string>, IAggregateRoot
         {
             return;
         }
-        
+
         _tracks.Add(new AlbumTrack(trackId, trackNumber));
     }
 
@@ -67,5 +62,4 @@ public class Album : BaseEntity<string>, IAggregateRoot
     {
         _tracks.RemoveAll(t => t.TrackId == trackId);
     }
-
 }
