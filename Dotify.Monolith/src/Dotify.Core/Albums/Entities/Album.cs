@@ -12,11 +12,20 @@ namespace Dotify.Core.Albums.Entities;
 public class Album : BaseEntity<string>, IAggregateRoot
 {
     private readonly List<AlbumTrack> _tracks = new();
+    private readonly List<AlbumArtist> _artists = new();
     public IReadOnlyCollection<AlbumTrack> Tracks => _tracks.AsReadOnly();
-    public string ArtistId { get; private set; }
-    public Album(string artistId)
+    public IReadOnlyCollection<AlbumArtist> Artists => _artists.AsReadOnly();
+    public string Title { get; private set; }
+    public DateOnly ReleaseDate { get; private set; }
+    public Album(string title, DateOnly releaseDate)
     {
-        ArtistId = artistId;
+        if (string.IsNullOrWhiteSpace(title))
+        {
+            throw new ArgumentException($"'{nameof(title)}' cannot be null or whitespace.", nameof(title));
+        }
+
+        Title = title;
+        ReleaseDate = releaseDate;
     }
 
     public void AddTrack(string trackId, int trackNumber)

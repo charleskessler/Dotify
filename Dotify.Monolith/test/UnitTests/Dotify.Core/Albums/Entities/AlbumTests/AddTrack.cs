@@ -11,14 +11,15 @@ namespace UnitTests.Dotify.Core.Albums.Entities.AlbumTests;
 
 public class AddTrack
 {
-    private readonly string _artistId = "ARTIST ID";
+    private readonly string _albumTitle = "ALBUM TITLE!";
+    private readonly DateOnly _releaseDate = new(2022, 2, 22);
     private readonly string _trackId = "TRACK ID";
     private readonly int _trackNumber = 10;
 
     [Fact]
     public void AddsAlbumTrackIfNotExisting()
     {
-        var album = new Album(_artistId);
+        var album = new Album(_albumTitle, _releaseDate);
         album.AddTrack(_trackId, _trackNumber);
 
         var albumTrack = album.Tracks.Single();
@@ -31,7 +32,7 @@ public class AddTrack
     [Fact]
     public void CantAddTrackAtExistingNumber()
     {
-        var album = new Album(_artistId);
+        var album = new Album(_albumTitle, _releaseDate);
         album.AddTrack(_trackId, _trackNumber);
 
         Assert.Throws<AlbumTrackNumberAlreadyExistsException>(() => album.AddTrack(_trackId, _trackNumber));
@@ -40,7 +41,7 @@ public class AddTrack
     [Fact]
     public void KeepsExistingTrackWhenAddingDuplicate()
     {
-        var album = new Album(_artistId);
+        var album = new Album(_albumTitle, _releaseDate);
         album.AddTrack(_trackId, _trackNumber);
 
         album.AddTrack(_trackId, 4);
